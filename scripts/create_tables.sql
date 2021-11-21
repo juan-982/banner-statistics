@@ -1,0 +1,9 @@
+CREATE TABLE wishes(
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   external_id TEXT COLLATE NOCASE,
+   time TEXT,
+   name TEXT COLLATE NOCASE,
+   gacha_type TEXT COLLATE NOCASE,
+   item_type TEXT COLLATE NOCASE,
+   rank_type TEXT COLLATE NOCASE
+);
