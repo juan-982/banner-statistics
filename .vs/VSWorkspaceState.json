@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\models",
+    "\\scripts",
+    "\\services",
+    "\\utils"
   ],
   "SelectedNode": "\\main.py",
   "PreviewInSolutionExplorer": false

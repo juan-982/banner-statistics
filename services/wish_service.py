@@ -1,7 +1,8 @@
 import os, re, sqlite3
 import utils.db_manager as db_manager
+import utils.http_client as http_client
 from models.wish import Wish
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qsl, urlencode, unquote
 
 _LOG_PATH = os.environ["USERPROFILE"] + "/AppData/LocalLow/miHoYo/Genshin Impact/output_log.txt"
 _REGEX = "^OnGetWebViewPageFinish:https:\/\/webstatic-sea\.mihoyo\.com\/hk4e\/event\/.*\/log$"
@@ -16,9 +17,16 @@ def retrieve_history():
                 log = line
                
     url = urlparse(log.replace("OnGetWebViewPageFinish:", "", 1))
-    url = url._replace(netloc="hk4e-api-os.mihoyo.com", path="event/gacha_info/api/getGachaLog")
+    
+    params = dict(parse_qsl(url.query))
+    params.update({"lang": "en-us", "size": 20})
+    params.update({"gacha_type": "301"})
+    params.update({"page": 1})
+    params.update({"end_id": 0})
 
-    print(url.geturl())
+    url = url._replace(netloc="hk4e-api-os.mihoyo.com", path="event/gacha_info/api/getGachaLog", query=urlencode(params), fragment="")
+       
+    response = http_client.get(url.geturl())
 	
 
 def create(external_id, time, name, gacha_type, item_type, rank_type):
