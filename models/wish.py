@@ -1,30 +1,46 @@
 class Wish:
-  def __init__(self, id, external_id, time, name, gacha_type, item_type, rank_type):
-    self._id = id
-    self._external_id = external_id
-    self._time = time
-    self._name = name
-    self._gacha_type = gacha_type
-    self._item_type = item_type
-    self._rank_type = rank_type
+    GACHA_TYPES = {
+        "beginner": "100",
+        "standard": "200",
+        "character": "301",
+        "weapon": "302"
+        }
+    ITEM_TYPES= {
+        "weapon": "Weapon",
+        "character": "Character"
+        }
+    RANK_TYPES = {
+        3: "3",
+        4: "4",
+        5: "5",
+        }
 
-  def get_id(self):
-    return self._id
+    def __init__(self, id, external_id, time, name, gacha_type, item_type, rank_type):
+        self._id = id
+        self._external_id = external_id
+        self._time = time
+        self._name = name
+        self._gacha_type = gacha_type
+        self._item_type = item_type
+        self._rank_type = rank_type
 
-  def get_external_id(self):
-    return self._external_id
+    def get_id(self):
+        return self._id
 
-  def get_time(self):
-    return self._time
+    def get_external_id(self):
+        return self._external_id
 
-  def get_name(self):
-    return self._name
+    def get_time(self):
+        return self._time
 
-  def get_gacha_type(self):
-    return self._gacha_type
+    def get_name(self):
+        return self._name
 
-  def get_item_type(self):
-    return self._item_type
+    def get_gacha_type(self):
+        return self._gacha_type
 
-  def get_rank_type(self):
-    return self._rank_type
+    def get_item_type(self):
+        return self._item_type
+
+    def get_rank_type(self):
+        return self._rank_type
