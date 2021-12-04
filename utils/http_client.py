@@ -1,6 +1,6 @@
 import requests
-import json
 
 def get(url):
+    print("GET: " + url)
     response = requests.get(url)
     return response
