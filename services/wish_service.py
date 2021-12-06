@@ -43,6 +43,7 @@ def list(gacha_type):
           SELECT id, external_id, time, name, gacha_type, item_type, rank_type
             FROM wishes
             WHERE gacha_type = ?
+            ORDER BY datetime(time) DESC
         """, (Wish.GACHA_TYPES[gacha_type],))
         records = cursor.fetchall()
 
