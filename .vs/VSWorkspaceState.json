@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\integrations",
-    "\\scripts"
+    "\\integrations\\miHoYo",
+    "\\models",
+    "\\scripts",
+    "\\services",
+    "\\utils"
   ],
-  "SelectedNode": "\\main.py",
   "PreviewInSolutionExplorer": false
 }

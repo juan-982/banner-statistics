@@ -67,9 +67,6 @@ def generate_statistics(gacha_type):
 
 
 def plot_graph(data):
-    # plt.rcParams.update({'font.family':'sans-serif'})
-    # plt.rcParams.update({'font.sans-serif':'Noto Emoji'})\
-
     background_colour = "#64778d"
 
     # Pie chart, where the slices will be ordered and plotted counter-clockwise:
@@ -117,6 +114,12 @@ db_manager.initialize()
 gacha_type = "character"
 stats = generate_statistics(gacha_type)
 
+fig = plot_graph(stats["wishes"])
+figure_x, figure_y, figure_w, figure_h = fig.bbox.bounds
+
+width = int(figure_w)
+height = int(figure_h)
+
 # sg.theme("DarkGrey6")
 menu_def = [
     [
@@ -129,11 +132,18 @@ menu_def = [
     ]
 ]
 
+print(figure_w, figure_h)
+
 # Define the window layout
 layout = [
     [sg.Menu(menu_def, key="-MENU-", disabled_text_color="grey", font=("Calibri", 11), pad=(5, 5))],
-    # [sg.Text("Wish Counter")],
-    [sg.Canvas(key="-CANVAS-")],
+    [
+        sg.Column([[sg.Canvas(key="-CANVAS-", size=(figure_w, figure_h))]]), 
+        sg.Column([
+            [sg.Frame(title="", layout=[[sg.Text(str(stats["pity count"]) + " pulls to next pity", key="pity")]], size=(figure_w, figure_h / 2))], 
+            [sg.Frame(title="", layout=[[sg.Text("Column")]], size=(figure_w, figure_h / 2))], 
+        ])
+    ],
     [sg.Button("Refresh")]
 ]
 
@@ -148,7 +158,7 @@ window = sg.Window(
 )
 
 # Add the plot to the window
-fig_agg = draw_figure(window["-CANVAS-"].TKCanvas, plot_graph(stats["wishes"]))
+fig_agg = draw_figure(window["-CANVAS-"].TKCanvas, fig)
 
 # Create an event loop
 while True:
@@ -180,6 +190,8 @@ while True:
             continue
             
         stats = generate_statistics(gacha_type)
+        stats["pity count"] += 5
+        window["pity"].update(str(stats["pity count"]) + " pulls to next pity")
         fig_agg.get_tk_widget().forget()
         plt.close("all")
         fig_agg = draw_figure(window["-CANVAS-"].TKCanvas, plot_graph(stats["wishes"]))
